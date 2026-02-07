@@ -44,13 +44,10 @@ class OwnerService:
     @staticmethod
     async def teacher_list(
         db: AsyncSession,
-        current_user,
         page: int = 1,
         limit: int = 10,
     ):
-        # faqat owner (id=1)
-        if current_user.id != 1:
-            raise HTTPException(status_code=403, detail="Forbidden")
+
 
         if page < 1 or limit < 1:
             raise HTTPException(status_code=400, detail="Invalid pagination params")
@@ -149,12 +146,10 @@ class OwnerService:
     @staticmethod
     async def news_list(
         db: AsyncSession,
-        current_user,
         page: int = 1,
         limit: int = 10,
     ):
-        if current_user.id != 1:
-            raise HTTPException(status_code=403, detail="Forbidden")
+
 
         offset = (page - 1) * limit
 
@@ -237,12 +232,10 @@ class OwnerService:
     @staticmethod
     async def category_list(
         db: AsyncSession,
-        current_user,
         page: int = 1,
         limit: int = 10,
     ):
-        if current_user.id != 1:
-            raise HTTPException(status_code=403, detail="Forbidden")
+
 
         offset = (page - 1) * limit
 
@@ -332,12 +325,10 @@ class OwnerService:
     @staticmethod
     async def deficiency_list(
         db: AsyncSession,
-        current_user,
         page: int = 1,
         limit: int = 10,
     ):
-        if current_user.id != 1:
-            raise HTTPException(status_code=403, detail="Forbidden")
+
 
         offset = (page - 1) * limit
 

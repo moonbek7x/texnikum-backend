@@ -31,11 +31,9 @@ async def get_teachers(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
-    current_user = Depends(get_current_user),
 ):
     return await OwnerService.teacher_list(
         db=db,
-        current_user=current_user,
         page=page,
         limit=limit,
     )
@@ -79,9 +77,8 @@ async def get_news(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
-    current_user = Depends(get_current_user),
 ):
-    return await OwnerService.news_list(db, current_user, page, limit)
+    return await OwnerService.news_list(db, page, limit)
 
 # PATCH
 @router.patch("/news/{news_id}")
@@ -118,9 +115,8 @@ async def get_categories(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
-    current_user = Depends(get_current_user),
 ):
-    return await OwnerService.category_list(db, current_user, page, limit)
+    return await OwnerService.category_list(db, page, limit)
 
 # PATCH
 @router.patch("/categories/{category_id}")
@@ -160,9 +156,8 @@ async def get_deficiencies(
     page: int = Query(1, ge=1),
     limit: int = Query(10, ge=1, le=100),
     db: AsyncSession = Depends(get_async_db),
-    current_user = Depends(get_current_user),
 ):
-    return await OwnerService.deficiency_list(db, current_user, page, limit)
+    return await OwnerService.deficiency_list(db, page, limit)
 
 # PATCH
 @router.patch("/deficiency/{deficiency_id}")
