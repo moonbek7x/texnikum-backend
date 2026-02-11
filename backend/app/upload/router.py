@@ -1,16 +1,24 @@
-from fastapi import APIRouter, UploadFile, File, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi import APIRouter, UploadFile, File, Form
+from typing import List
 
-from backend.app.upload.servise import save_teacher_photo
+
+from backend.app.upload.servise import save_file
 
 router = APIRouter(prefix="/upload", tags=["Upload"])
 
-@router.post("/teacher-photo")
-async def upload_teacher_photo(
-    file: UploadFile = File(...),
+
+@router.post("/")
+async def upload_files(
+    folder: str = Form(...),
+    files: List[UploadFile] = File(...)
 ):
-    photo_url = await save_teacher_photo(file)
+    urls = []
+
+    for file in files:
+        path = await save_file(file, folder)
+        urls.append(path)
 
     return {
-        "url": photo_url
+        "count": len(urls),
+        "files": urls
     }

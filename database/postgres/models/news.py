@@ -18,10 +18,12 @@ class New(Base):
         nullable=False,
     )
 
-    photo: Mapped[str | None] = mapped_column(
-        String(255),
-        nullable=True,
-    )
+    
+    photo: Mapped[list[str] | None] = mapped_column(
+    JSON,
+    nullable=True
+)
+
 
     created_date: Mapped[DateTime] = mapped_column(
         DateTime(timezone=True),

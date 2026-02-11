@@ -1,4 +1,32 @@
----
+version: "3.9"
+
 services:
+  db:
+    image: postgres:15
+    container_name: texnikum_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: parol
+      POSTGRES_DB: texnikum
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
   backend:
-  
+    build: .
+    container_name: texnikum_backend
+    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8001"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - ./uploads:/app/uploads
+    env_file:
+      - .env
+
+volumes:
+  postgres_data:

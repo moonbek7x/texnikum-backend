@@ -10,24 +10,24 @@ class TeacherCreate(BaseModel):
     first_name: str
     last_name: str
     middle_name: str | None = None
-    photo_url: str
+    photo_url: list
 
 
 class TeacherUpdate(BaseModel):
     first_name: str | None = None
     last_name: str | None = None
     middle_name: str | None = None
-    photo_url: str | None = None
+    photo_url: list | None = None
 
 
 class NewsCreate(BaseModel):
     description: str
-    photo: str | None = None
+    photo_url: list | None = None
 
 
 class NewsUpdate(BaseModel):
     description: str | None = None
-    photo: str | None = None
+    photo_url: list | None = None
 
 
 class CategoryCreate(BaseModel):

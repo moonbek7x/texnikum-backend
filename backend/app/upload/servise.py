@@ -1,16 +1,36 @@
-import uuid
 from pathlib import Path
-from fastapi import UploadFile
+from fastapi import UploadFile, HTTPException
+import uuid
 
-UPLOAD_DIR = Path("uploads")  
-async def save_teacher_photo(file: UploadFile) -> str:
-    UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+BASE_UPLOAD_DIR = Path("uploads")
 
-    ext = file.filename.split(".")[-1]
+ALLOWED_FOLDERS = {
+    "teachers",
+    "categories",
+    "news",
+    "deficiency"
+}
+
+MAX_FILE_SIZE = 10 * 1024 * 1024  # 10MB
+
+
+async def save_file(file: UploadFile, folder: str) -> str:
+    if folder not in ALLOWED_FOLDERS:
+        raise HTTPException(400, "Invalid folder")
+
+    upload_dir = BASE_UPLOAD_DIR / folder
+    upload_dir.mkdir(parents=True, exist_ok=True)
+
+    ext = file.filename.split(".")[-1].lower()
     filename = f"{uuid.uuid4()}.{ext}"
-    path = UPLOAD_DIR / filename
+    path = upload_dir / filename
 
     content = await file.read()
+
+    if len(content) > MAX_FILE_SIZE:
+        raise HTTPException(400, "File too large")
+
     path.write_bytes(content)
 
-    return f"teachers/{filename}"
+    # DB uchun qaytariladi
+    return f"{folder}/{filename}"
