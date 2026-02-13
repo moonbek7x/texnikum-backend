@@ -33,7 +33,7 @@ class OwnerService:
             first_name=data.first_name,
             last_name=data.last_name,
             middle_name=data.middle_name,
-            photo=data.photo_url,
+            photo=data.photo,
         )
 
         db.add(teacher)

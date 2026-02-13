@@ -15,14 +15,6 @@ async def create_teacher(
     db: AsyncSession = Depends(get_async_db),
     current_user = Depends(get_current_user),
 ):
-    data = TeacherCreate(
-        first_name=data.first_name,
-        last_name=data.last_name,
-        middle_name=data.middle_name,
-        photo_url=data.photo_url
-
-    )
-
     return await OwnerService.teacher_create(data, db, current_user)
 
 
@@ -63,7 +55,7 @@ async def delete_teacher(
     )
 
 # CREATE
-@router.post("cree_news")
+@router.post("/create_news")
 async def create_news(
     data: NewsCreate,
     db: AsyncSession = Depends(get_async_db),
@@ -101,7 +93,7 @@ async def delete_news(
 
 
 # CREATE
-@router.post("create_categories")
+@router.post("/create_categories")
 async def create_category(
     data: CategoryCreate,
     db: AsyncSession = Depends(get_async_db),
@@ -142,7 +134,7 @@ async def delete_category(
     )
 
 # CREATE
-@router.post("create_deficiency")
+@router.post("/create_deficiency")
 async def create_deficiency(
     data: DeficiencyCreate,
     db: AsyncSession = Depends(get_async_db),

@@ -6,7 +6,10 @@ from backend.app.auth.router import router as auth
 from backend.app.owner.router import router as owner
 from backend.app.upload.router import router as upload
 
-app = FastAPI(openapi_url="/openapi.json", docs_url=None, root_path="/api")
+app = FastAPI()
+
+# app = FastAPI(openapi_url="/openapi.json", docs_url=None, root_path="/api")
+
 app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
 origins = [
